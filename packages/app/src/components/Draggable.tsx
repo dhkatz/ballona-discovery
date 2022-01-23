@@ -1,10 +1,10 @@
-import React, {FunctionComponent} from 'react';
-import {useDrag} from 'react-dnd';
+import React, { FunctionComponent } from 'react';
+import { useDrag } from 'react-dnd';
 
 export type DraggableProps = { type: string };
 
-export const Draggable: FunctionComponent<DraggableProps> = ({children, type}) => {
-	const [{dragging}, drag, preview] = useDrag({
+export const Draggable: FunctionComponent<DraggableProps> = ({ children, type }) => {
+	const [{ dragging }, drag, preview] = useDrag({
 		type,
 		collect: (monitor) => ({
 			dragging: monitor.isDragging(),
@@ -12,7 +12,7 @@ export const Draggable: FunctionComponent<DraggableProps> = ({children, type}) =
 	});
 
 	return (
-		<div ref={preview} style={{opacity: dragging ? 0.5 : 1}}>
+		<div ref={preview} style={{ opacity: dragging ? 0.5 : 1 }}>
 			{children}
 		</div>
 	);

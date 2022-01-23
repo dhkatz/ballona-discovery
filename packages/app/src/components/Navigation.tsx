@@ -1,7 +1,7 @@
-import {Nav, Navbar} from 'react-bootstrap';
+import { Nav, Navbar } from 'react-bootstrap';
 
 import logo from '../images/logo.png';
-import {NavLink} from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export const Navigation = () => {
 	return (
@@ -10,11 +10,11 @@ export const Navigation = () => {
 				<img
 					alt={'Ballona Wetlands logo'}
 					src={logo}
-					style={{maxWidth: '180px'}}
+					style={{ maxWidth: '180px' }}
 					className={'d-inline-block align-top'}
 				/>
 			</Navbar.Brand>
-			<Navbar.Toggle aria-controls={'navigation'}/>
+			<Navbar.Toggle aria-controls={'navigation'} />
 			<Navbar.Collapse id={'navigation'}>
 				<Nav className={'mr-auto'}>
 					<Nav.Link>Tours</Nav.Link>

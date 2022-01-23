@@ -1,5 +1,5 @@
-import {useState} from 'react';
-import {Col, Container, Row} from 'react-bootstrap';
+import { useState } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
 
 export const Editor = () => {
 	const [components, setComponents] = useState<any[]>([]);
@@ -25,7 +25,7 @@ export const Editor = () => {
 					</div>
 				</Col>
 				<Col sm={8}>
-					<div className={''}/>
+					<div className={''} />
 				</Col>
 			</Row>
 		</Container>

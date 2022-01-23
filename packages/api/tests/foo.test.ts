@@ -1,3 +1,3 @@
 it('should pass an example test', () => {
-    expect(true).toBe(true);
+	expect(true).toBe(true);
 });
