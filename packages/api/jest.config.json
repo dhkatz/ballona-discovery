@@ -1,0 +1,9 @@
+{
+  "preset": "ts-jest",
+  "displayName": "api",
+  "globals": {
+    "ts-jest": {
+      "tsconfig": "./tsconfig.json"
+    }
+  }
+}

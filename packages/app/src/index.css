@@ -1,0 +1,9 @@
+:root {
+  --bs-secondary: #192A6BFF;
+  --bs-secondary-rgb: 25, 42, 107;
+}
+
+body {
+  background-color: whitesmoke;
+  height: 100vh;
+}
