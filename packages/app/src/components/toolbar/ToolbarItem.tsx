@@ -1,12 +1,8 @@
-import { useNode } from '@craftjs/core';
-import { Grid, Slider, RadioGroup } from '@material-ui/core';
-import { withStyles } from '@material-ui/styles';
 import React from 'react';
+import { Form } from 'react-bootstrap';
+import { useNode } from '@craftjs/core';
 
 import { ToolbarDropdown } from './ToolbarDropdown';
-import { ToolbarTextInput } from './ToolbarTextInput';
-import styled from 'styled-components';
-import { Form } from 'react-bootstrap';
 
 export type ToolbarItemProps = {
 	prefix?: string;
@@ -18,6 +14,7 @@ export type ToolbarItemProps = {
 	type: string;
 	onChange?: (value: any) => any;
 };
+
 export const ToolbarItem = ({
 	full = false,
 	propKey,

@@ -1,7 +1,10 @@
 {
   "preset": "ts-jest",
+  "collectCoverage": true,
   "collectCoverageFrom": [
-    "src/**/*.tsx?$"
+	"src/**/*.{ts,tsx}",
+	"!**/node_modules/**",
+	"!**/vendor/**"
   ],
   "projects": [
     "<rootDir>/packages/*"
