@@ -15,5 +15,5 @@ jobs:
         with:
           args: deploy --only firestore:rules
         env:
-          GCP_SA_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_BALLONA_DISCOVERY_FCDAF }}
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           PROJECT_ID: ballona-discovery-fcdaf
