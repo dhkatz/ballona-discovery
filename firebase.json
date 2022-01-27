@@ -16,5 +16,33 @@
   "firestore": {
     "rules": "./.firebase/firestore.rules",
     "indexes": "./.firebase/firestore.indexes.json"
+  },
+  "functions": {
+    "source": "./packages/api",
+    "predeploy": [
+      "yarn workspace api run build"
+    ],
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  },
+  "emulators": {
+    "functions": {
+      "port": 5001
+    },
+    "firestore": {
+      "port": 8080
+    },
+    "hosting": {
+      "port": 5000
+    },
+    "ui": {
+      "enabled": true
+    },
+    "auth": {
+      "port": 9099
+    }
   }
 }
