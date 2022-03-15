@@ -1,30 +1,35 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useEditor } from '../hooks';
 
 export const EditorSettings = () => {
-	const { selected, find, items } = useEditor();
+	const { selected } = useEditor();
 
-	const item = useMemo(() => {
-		if (selected === null) {
-			return null;
-		}
-
-		const index = find(selected);
-
-		if (index === -1) {
-			return null;
-		}
-
-		return items[index];
-	}, [selected, find]);
+	useEffect(() => {
+		console.log(`Selecting ${selected}`);
+	}, [selected]);
 
 	const inputs = useMemo(() => {
-		if (item === null) {
+		if (selected === null) {
 			return [];
 		}
 
-		return item.component.editor.inputs;
-	}, [item]);
+		return selected.component.editor.props;
+	}, [selected]);
 
-	return <div>EditorSettings</div>;
+	return (
+		<div>
+			<h1>Settings</h1>
+			Selected component: {selected?.component.name}
+			<br />
+			Component has {inputs.length} inputs
+			<br />
+			<ul>
+				{inputs.map((input) => (
+					<li key={input.name}>
+						{input.name}: {input.type}
+					</li>
+				))}
+			</ul>
+		</div>
+	);
 };

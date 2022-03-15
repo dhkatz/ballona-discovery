@@ -1,7 +1,7 @@
 import { useDrag, useDrop } from 'react-dnd';
 import React, { memo, NamedExoticComponent, useMemo, useState } from 'react';
 
-import { useEditor } from '../hooks';
+import { useCanvas, useEditor } from '../hooks';
 import { createPortal } from 'react-dom';
 
 export type EditorItemProps = {
@@ -11,10 +11,11 @@ export type EditorItemProps = {
 
 export const EditorItem: NamedExoticComponent<EditorItemProps> = memo(
 	({ id, component, ...props }) => {
-		const { move, find, select, selected } = useEditor();
+		const { select, selected } = useEditor();
+		const { find, move } = useCanvas();
 		const [hovered, setHovered] = useState(false);
 
-		const index = useMemo(() => find(id), [find, id]);
+		const index = useMemo(() => find(id)[1], [find, id]);
 
 		const [, drop] = useDrop(
 			() => ({
@@ -24,7 +25,9 @@ export const EditorItem: NamedExoticComponent<EditorItemProps> = memo(
 
 					console.log(`hovering ${item.id} over ${id}`);
 
-					move(item.id, find(id));
+					const [, index] = find(id);
+
+					move(item.id, index);
 				},
 			}),
 			[id, find, move]
@@ -56,9 +59,9 @@ export const EditorItem: NamedExoticComponent<EditorItemProps> = memo(
 				style={{ opacity }}
 				onMouseEnter={() => setHovered(true)}
 				onMouseLeave={() => setHovered(false)}
-				onClick={() => select(id)}
+				onClick={() => select(find(id)[0])}
 			>
-				{(hovered || selected === id) && createPortal(<div>{id}</div>, document.body)}
+				{(hovered || selected?.id === id) && createPortal(<div>{id}</div>, document.body)}
 				<Component {...props} />
 			</div>
 		);

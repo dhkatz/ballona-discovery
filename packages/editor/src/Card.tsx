@@ -23,5 +23,5 @@ export const Card: EditorComponent<CardProps> = ({ text, ...props }) => {
 
 Card.editor = {
 	name: 'Card',
-	inputs: [inputs.text('Text', 'Hello, world!')],
+	props: [inputs.text('Text', 'Hello, world!')],
 };

@@ -4,13 +4,18 @@ import { EditorInput } from './inputs';
 
 export type EditorState = {
 	components: EditorComponent<any>[];
+	selected: EditorObject | null;
+	select: (object: EditorObject | null) => void;
+	register: (canvas: any) => void;
+	unregister: (canvas: any) => void;
+};
+
+export type CanvasState = {
 	items: EditorObject[];
-	selected: string | null;
-	select: (id: string) => void;
-	move: (id: string, index: number) => void;
-	add: (index: number, type: string) => void;
+	add: (type: string, index?: number) => void;
 	remove: (id: string) => void;
-	find: (id: string) => number;
+	move: (id: string, index: number) => void;
+	find: (id: string) => [EditorObject | null, number];
 };
 
 export type EditorObject<T = Record<string, unknown>> = {
@@ -23,6 +28,6 @@ export type EditorComponent<T> =
 	| React.ComponentType<T> & {
 			editor: {
 				name: string;
-				inputs: EditorInput[];
+				props: EditorInput[];
 			};
 	  };
