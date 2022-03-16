@@ -3,11 +3,9 @@
   "compilerOptions": {
     "target": "es2017",
     "module": "commonjs",
-    "composite": true,
     "rootDir": "src",
     "outDir": "dist"
   },
-  "compileOnSave": true,
   "include": [
     "src"
   ]

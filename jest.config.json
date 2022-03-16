@@ -8,5 +8,8 @@
   ],
   "projects": [
     "<rootDir>/packages/*"
-  ]
+  ],
+  "moduleNameMapper": {
+	"@ballona-discovery/(.*)$": "<rootDir>/packages/$1"
+  }
 }
