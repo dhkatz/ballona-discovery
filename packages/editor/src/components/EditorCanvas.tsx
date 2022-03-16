@@ -3,19 +3,25 @@ import update from 'immutability-helper';
 
 import { CanvasContext } from '../context';
 import { useEditor } from '../hooks';
-import { EditorObject } from '../types';
+import { CanvasState, EditorObject } from '../types';
 
 import { Card } from '../Card';
 import { EditorItem } from './EditorItem';
+import { Droppable } from 'react-beautiful-dnd';
 
-export const EditorCanvas = memo(() => {
+export interface EditorCanvasProps {
+	id?: string;
+}
+
+export const EditorCanvas = memo<EditorCanvasProps>(({ id: canvasId }) => {
+	const id = useMemo(() => canvasId || `canvas-${Date.now()}-${Math.random()}`, [canvasId]);
 	const { components, select, selected, register, unregister } = useEditor();
 
-	const [items, setItems] = useState<EditorObject[]>([
-		{ id: '1', props: { text: '1' }, component: Card },
-		{ id: '2', props: { text: '2' }, component: Card },
-		{ id: '3', props: { text: '3' }, component: Card },
-		{ id: '4', props: { text: '4' }, component: Card },
+	const [items, setItems] = useState<EditorObject[]>(() => [
+		{ id: `${Date.now()}-${Math.random()}`, props: { text: '1' }, component: Card },
+		{ id: `${Date.now()}-${Math.random()}`, props: { text: '2' }, component: Card },
+		{ id: `${Date.now()}-${Math.random()}`, props: { text: '3' }, component: Card },
+		{ id: `${Date.now()}-${Math.random()}`, props: { text: '4' }, component: Card },
 	]);
 
 	const find = useCallback<(id: string) => [EditorObject | null, number]>(
@@ -28,44 +34,49 @@ export const EditorCanvas = memo(() => {
 	);
 
 	const move = useCallback(
-		(id: string, target: number) => {
-			const [item, index] = find(id);
+		(source: number, target: number) => {
+			const item = items[source];
 
-			if (item && index !== -1) {
+			if (item) {
 				select(item);
 
 				setItems(
 					update(items, {
 						$splice: [
-							[index, 1],
+							[source, 1],
 							[target, 0, item],
 						],
 					})
 				);
 			}
 		},
-		[items, find]
+		[items]
 	);
 
 	const add = useCallback(
-		(type: string, index = 0) => {
-			const component = components.find((c) => c.editor.name === type);
+		(type: EditorObject | string, index = 0) => {
+			let item: EditorObject;
+			if (typeof type === 'string') {
+				const component = components.find((c) => c.editor.name === type);
 
-			if (!component) {
-				return;
+				if (!component) {
+					return;
+				}
+
+				const props: ComponentProps<any> = {};
+
+				for (const prop of component.editor.props) {
+					props[prop.name] = prop.fallback;
+				}
+
+				item = {
+					id: `${type}-${Date.now()}`,
+					component,
+					props,
+				};
+			} else {
+				item = type;
 			}
-
-			const props: ComponentProps<any> = {};
-
-			for (const prop of component.editor.props) {
-				props[prop.name] = prop.fallback;
-			}
-
-			const item: EditorObject = {
-				id: `${type}-${Date.now()}`,
-				component,
-				props,
-			};
 
 			select(item);
 
@@ -79,8 +90,8 @@ export const EditorCanvas = memo(() => {
 	);
 
 	const remove = useCallback(
-		(id: string) => {
-			const [item, index] = find(id);
+		(id: string | number) => {
+			const [item, index] = typeof id === 'number' ? [items[id], id] : find(id);
 
 			if (item && index !== -1) {
 				if (selected === item) {
@@ -92,14 +103,18 @@ export const EditorCanvas = memo(() => {
 						$splice: [[index, 1]],
 					})
 				);
+			} else {
+				throw new Error(`Tried to remove item from canvas that doesn't exist: ${id}`);
 			}
+
+			return item;
 		},
 		[items, find]
 	);
 
-	const canvas = useMemo(() => {
-		return { items, find, move, add, remove };
-	}, [items]);
+	const canvas = useMemo<CanvasState>(() => {
+		return { id, items, find, move, add, remove };
+	}, [id, items, find, move, add, remove]);
 
 	useEffect(() => {
 		register(canvas);
@@ -109,9 +124,16 @@ export const EditorCanvas = memo(() => {
 
 	return (
 		<CanvasContext.Provider value={canvas}>
-			{items.map(({ id, component, props }) => (
-				<EditorItem key={id} id={id} component={component} {...props} />
-			))}
+			<Droppable droppableId={`${id}`}>
+				{(provided) => (
+					<div ref={provided.innerRef} {...provided.droppableProps}>
+						{items.map((item, index) => (
+							<EditorItem key={item.id} index={index} item={item} />
+						))}
+						{provided.placeholder}
+					</div>
+				)}
+			</Droppable>
 		</CanvasContext.Provider>
 	);
 });

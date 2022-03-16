@@ -1,17 +1,9 @@
-import React, {
-	memo,
-	NamedExoticComponent,
-	useCallback,
-	useEffect,
-	useMemo,
-	useState,
-} from 'react';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import React, { memo, NamedExoticComponent, useCallback, useMemo, useState } from 'react';
+import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import update from 'immutability-helper';
 
 import { EditorContext } from '../context';
-import { EditorComponent, EditorObject } from '../types';
+import { CanvasState, EditorComponent, EditorObject, EditorState } from '../types';
 
 import { EditorItem } from './EditorItem';
 import { EditorSettings } from './EditorSettings';
@@ -19,7 +11,7 @@ import { EditorToolbox } from './EditorToolbox';
 import { EditorCanvas } from './EditorCanvas';
 
 export type EditorProps = {
-	components: EditorComponent<any>[];
+	components: EditorComponent[];
 	children?: React.ReactNode;
 };
 
@@ -32,36 +24,68 @@ type Editor = NamedExoticComponent<EditorProps> & {
 
 export const Editor: Editor = memo(({ components, children }) => {
 	const [selected, setSelected] = useState<EditorObject | null>(null);
-	const [canvases, setCanvases] = useState<any[]>([]);
+	const [canvases, setCanvases] = useState<CanvasState[]>([]);
+
+	const drag = (result: DropResult) => {
+		const { source, destination } = result;
+
+		if (!destination) {
+			return;
+		}
+
+		if (source.droppableId === destination.droppableId) {
+			// If dragged within the same canvas
+			const canvas = canvases.find((c) => c.id === source.droppableId);
+
+			if (!canvas) {
+				throw new Error(`Tried to drop on canvas with no state: ${source.droppableId}`);
+			}
+
+			canvas.move(source.index, destination.index);
+		} else {
+			// If dragged between canvases
+			const sourceCanvas = canvases.find((c) => c.id === source.droppableId);
+			const destinationCanvas = canvases.find((c) => c.id === destination.droppableId);
+
+			if (!sourceCanvas || !destinationCanvas) {
+				throw new Error(
+					`Tried to drop on canvas with no state: ${source.droppableId} -> ${destination.droppableId}`
+				);
+			}
+
+			destinationCanvas.add(sourceCanvas.remove(source.index), destination.index);
+		}
+	};
 
 	const select = useCallback((object: EditorObject | null) => {
 		setSelected(object);
 	}, []);
 
-	const register = useCallback((canvas: any) => {
+	const register = useCallback((canvas: CanvasState) => {
 		setCanvases((c) => update(c, { $push: [canvas] }));
 	}, []);
 
-	const unregister = useCallback((canvas: any) => {
+	const unregister = useCallback((canvas: CanvasState) => {
 		setCanvases((c) => update(c, { $splice: [[c.indexOf(canvas), 1]] }));
 	}, []);
 
-	const editor = useMemo(
+	const editor = useMemo<EditorState>(
 		() => ({
 			components,
+			canvases,
 			selected,
 			select,
 			register,
 			unregister,
 		}),
-		[components, selected, select]
+		[components, canvases, selected, select, register, unregister]
 	);
 
 	return (
 		<div>
-			<DndProvider backend={HTML5Backend}>
+			<DragDropContext onDragEnd={drag}>
 				<EditorContext.Provider value={editor}>{children}</EditorContext.Provider>
-			</DndProvider>
+			</DragDropContext>
 		</div>
 	);
 }) as Editor;

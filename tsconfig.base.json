@@ -1,27 +1,23 @@
 {
   "compilerOptions": {
-    "lib": [
-      "es2019",
-      "es2021",
-      "dom"
-    ],
+	"module": "esnext",
     "target": "esnext",
-    "module": "esnext",
+	"lib": ["dom", "es2019"],
     "moduleResolution": "node",
+
     "rootDir": ".",
+	"baseUrl": "./packages",
+
+	"composite": true,
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
-    "noEmitOnError": true,
-    "strictNullChecks": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "strictPropertyInitialization": true,
-    "skipLibCheck": true,
-    "downlevelIteration": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true
+
+	"allowSyntheticDefaultImports": true,
+
+	"paths": {
+	  "@ballona-discovery/*": ["./*/src"]
+	}
   },
   "exclude": [
     "node_modules"

@@ -2,5 +2,14 @@
   "extends": "./tsconfig.base.json",
   "files": [],
   "references": [
+	{
+	  "path": "./packages/api"
+	},
+	{
+	  "path": "./packages/app"
+	},
+	{
+	  "path": "./packages/editor"
+	}
   ]
 }

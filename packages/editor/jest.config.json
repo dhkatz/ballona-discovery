@@ -1,0 +1,9 @@
+{
+  "preset": "ts-jest",
+  "displayName": "editor",
+  "globals": {
+	"ts-jest": {
+	  "tsconfig": "./tsconfig.json"
+	}
+  }
+}

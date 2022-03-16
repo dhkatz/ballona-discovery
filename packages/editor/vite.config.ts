@@ -7,7 +7,7 @@ export default defineConfig({
 		lib: {
 			entry: path.resolve(__dirname, 'src/index.ts'),
 			name: '@ballona-discovery/editor',
-			fileName: (format) => `ballona-discovery.editor.${format}.js`,
+			fileName: (format) => `${format}/index.js`,
 		},
 		rollupOptions: {
 			external: ['react', 'react-dom'],

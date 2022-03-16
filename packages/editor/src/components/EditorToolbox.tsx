@@ -4,7 +4,6 @@ import { useEditor } from '../hooks';
 
 /**
  * A list of available components that can be dragged and dropped into one or more canvases.
- * @constructor
  */
 export const EditorToolbox = () => {
 	const { components } = useEditor();
