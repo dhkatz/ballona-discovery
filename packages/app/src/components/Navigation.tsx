@@ -20,7 +20,9 @@ export const Navigation = () => {
 					<Nav.Link>Tours</Nav.Link>
 				</Nav>
 				<Nav className={'ml-auto float-lg-right'}>
-					<Nav.Link>Dashboard</Nav.Link>
+					<Nav.Link as={NavLink} to={'/dashboard'}>
+						Dashboard
+					</Nav.Link>
 					<Nav.Link as={NavLink} to={'/login'}>
 						Login
 					</Nav.Link>

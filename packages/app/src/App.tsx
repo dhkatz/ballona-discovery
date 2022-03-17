@@ -1,25 +1,19 @@
 import React from 'react';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { Container } from 'react-bootstrap';
 
-import { Navigation } from './components/Navigation';
-import { Login } from './views';
+import { Dashboard, Login } from './views';
+import { Layout } from './Layout';
 
 function App() {
 	return (
 		<Router>
-			<Container>
-				<header>
-					<Navigation />
-				</header>
-				<main>
-					<Routes>
-						<Route path={'/login'} element={<Login />} />
-					</Routes>
-				</main>
-				<footer>Footer</footer>
-			</Container>
+			<Routes>
+				<Route path="/" element={<Layout />}>
+					<Route path="login" element={<Login />} />
+					<Route path="dashboard/*" element={<Dashboard />} />
+				</Route>
+			</Routes>
 		</Router>
 	);
 }
