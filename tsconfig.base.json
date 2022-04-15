@@ -6,7 +6,7 @@
     "moduleResolution": "node",
 
     "rootDir": ".",
-	"baseUrl": "./packages",
+	"baseUrl": ".",
 
 	"composite": true,
 	"incremental": true,
@@ -16,12 +16,15 @@
 
 	"strict": true,
 	"esModuleInterop": true,
+	"useDefineForClassFields": true,
 	"allowSyntheticDefaultImports": true,
 	"forceConsistentCasingInFileNames": true,
 	"skipLibCheck": true,
 
+	"jsx": "react-jsx",
+
 	"paths": {
-	  "@ballona-discovery/*": ["./*/src"]
+	  "@ballona-discovery/*": ["./packages/*/src"]
 	}
   },
   "exclude": [
