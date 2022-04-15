@@ -17,8 +17,8 @@
   "dependencies": {
     "@koa/cors": "^3.2.0",
     "@koa/router": "^10.1.1",
-    "firebase-admin": "^9.12.0",
-    "firebase-functions": "^3.18.1",
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^3.20.1",
     "koa": "^2.13.4"
   },
   "devDependencies": {

@@ -2,8 +2,7 @@ import React from 'react';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-import { Dashboard, Login } from './views';
-import { Layout } from './Layout';
+import { Dashboard, Login, Layout } from './views';
 
 function App() {
 	return (

@@ -25,4 +25,4 @@ app.use(rewrite('/api'));
 app.use(router.routes());
 app.use(router.allowedMethods());
 
-exports.app = functions.https.onRequest(app.callback());
+export const api = functions.https.onRequest(app.callback());
