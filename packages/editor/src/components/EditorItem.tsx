@@ -16,6 +16,10 @@ export const EditorItem: NamedExoticComponent<EditorItemProps> = memo(
 
 		const Component = item.component;
 
+		if (!Component) {
+			return null;
+		}
+
 		return (
 			<Draggable draggableId={item.id} index={index}>
 				{(provided, snapshot) => (
