@@ -8,7 +8,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc --build",
-	"emulate": "tsc --build --watch",
+    "emulate": "tsc --build --watch",
     "serve": "npm run build && firebase emulators:start --only functions",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
@@ -20,6 +20,7 @@
     "@koa/router": "^10.1.1",
     "firebase-admin": "^10.0.2",
     "firebase-functions": "^3.20.1",
+    "integrify": "^4.0.3",
     "koa": "^2.13.4"
   },
   "devDependencies": {

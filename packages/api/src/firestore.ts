@@ -2,17 +2,21 @@ import * as functions from 'firebase-functions';
 import { initializeApp } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
 
+import { integrify } from 'integrify';
+
 const app = initializeApp();
-const firestore = getFirestore(app);
+const db = getFirestore(app);
+
+integrify({ config: { functions, db } });
 
 export const authOnCreate = functions.auth.user().onCreate((user) => {
 	const { email, uid } = user;
 
-	return firestore.collection('users').doc(uid).set({ email });
+	return db.collection('users').doc(uid).set({ email });
 });
 
 export const authOnDelete = functions.auth.user().onDelete((user) => {
 	const { uid } = user;
 
-	return firestore.collection('users').doc(uid).delete();
+	return db.collection('users').doc(uid).delete();
 });
