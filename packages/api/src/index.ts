@@ -5,6 +5,8 @@ import { Middleware } from 'koa';
 import app from './app';
 import router from './router';
 
+export * from './firestore';
+
 const rewrite = (prefix: string): Middleware => {
 	return async (ctx, next) => {
 		if (ctx.url.startsWith(prefix)) {
