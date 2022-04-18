@@ -1,16 +1,41 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { NavLink, Route, Routes } from 'react-router-dom';
 
 import { UserManagement } from './UserManagement';
+import { Container, Nav, Navbar } from 'react-bootstrap';
 
 export const Dashboard = () => {
 	return (
-		<div>
-			<h1>Dashboard</h1>
+		<Container fluid={true}>
+			<Navbar collapseOnSelect expand={'lg'} bg={'secondary'} variant={'dark'}>
+				<Navbar.Brand as={NavLink} to={''} className={'text-primary'}>
+					Dashboard
+				</Navbar.Brand>
+				<Navbar.Toggle aria-controls="responsive-navbar-cms" />
+				<Navbar.Collapse id="responsive-navbar-cms">
+					<Nav>
+						<Nav.Item>
+							<Nav.Link className="text-primary" as={NavLink} to={'users'}>
+								Users
+							</Nav.Link>
+						</Nav.Item>
+						<Nav.Item>
+							<Nav.Link className="text-primary" as={NavLink} to={'tours'}>
+								Tours
+							</Nav.Link>
+						</Nav.Item>
+						<Nav.Item>
+							<Nav.Link className="text-primary" as={NavLink} to={'panels'}>
+								Panels
+							</Nav.Link>
+						</Nav.Item>
+					</Nav>
+				</Navbar.Collapse>
+			</Navbar>
 			<Routes>
 				<Route path="/" element={<h1>Hello!</h1>} />
 				<Route path="/users" element={<UserManagement />} />
 			</Routes>
-		</div>
+		</Container>
 	);
 };

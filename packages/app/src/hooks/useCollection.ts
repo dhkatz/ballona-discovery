@@ -1,4 +1,4 @@
-import { collection, CollectionReference, Query, query } from 'firebase/firestore';
+import { collection, CollectionReference, Query } from 'firebase/firestore';
 import { User } from 'firebase/auth';
 import { CollectionDataHook, useCollectionData } from 'react-firebase-hooks/firestore';
 
@@ -12,7 +12,7 @@ export const useCollection = <T>(
 	const { firestore } = useFirebase();
 	const [auth] = useAuth();
 	const ref = collection(firestore, collectionName) as CollectionReference<T>;
-	const builtQuery = auth ? (buildQuery ? buildQuery(ref, auth) : query(ref)) : null;
+	const builtQuery = auth ? (buildQuery ? buildQuery(ref, auth) : ref) : null;
 
 	const [data, loading, error, snapshot] = useCollectionData<T>(builtQuery);
 
