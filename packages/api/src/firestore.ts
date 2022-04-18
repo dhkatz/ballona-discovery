@@ -2,12 +2,8 @@ import * as functions from 'firebase-functions';
 import { initializeApp } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
 
-import { integrify } from 'integrify';
-
 const app = initializeApp();
 const db = getFirestore(app);
-
-integrify({ config: { functions, db } });
 
 export const authOnCreate = functions.auth.user().onCreate((user) => {
 	const { email, uid } = user;
