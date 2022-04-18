@@ -1,9 +1,20 @@
 :root {
-  --bs-secondary: #192A6BFF;
-  --bs-secondary-rgb: 25, 42, 107;
+	--bs-primary: #FFFFFF;
+	--bs-primary-rgb: 255, 255, 255;
+	--bs-secondary: #192A6BFF;
+	--bs-secondary-rgb: 25, 42, 107;
+}
+
+@font-face {
+	font-family: Matrix;
+	src: url("/fonts/Matrix II Regular.otf");
 }
 
 body {
   background-color: whitesmoke;
   height: 100vh;
+}
+
+nav {
+	font-family: Matrix, serif;
 }
