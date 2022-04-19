@@ -30,7 +30,7 @@ A content management system for creating interactive park tours and experiences.
 
 ### Deployment
 
-Deployment is handled automatically through [GitHub Actions](actions).
+Deployment is handled automatically through [GitHub Actions](https://github.com/dhkatz/ballona-discovery/actions).
 
 The following actions are available:
 
