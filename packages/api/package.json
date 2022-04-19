@@ -9,7 +9,6 @@
   "scripts": {
     "build": "tsc --build",
 	"dev": "tsc --build --watch",
-    "emulate": "tsc --build --watch",
     "serve": "npm run build && firebase emulators:start --only functions",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",

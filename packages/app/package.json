@@ -3,7 +3,6 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "emulate": "vite build --watch",
     "build": "tsc --build && vite build",
     "preview": "vite preview"
   },
