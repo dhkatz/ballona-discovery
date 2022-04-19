@@ -1,9 +1,34 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if
-          request.time < timestamp.date(2022, 5, 25);
-    }
+    function hasOnly(newResource, oldResource, fields) {
+		return newResource.data.diff(oldResource.data).affectedKeys().hasOnly(fields);
+	}
+
+	function hasAll(resource, fields) {
+		return resource.data.keys().hasAll(fields);
+	}
+
+	function isAuthed() {
+		return request.auth != null;
+	}
+
+	function isOwner(auth, id) {
+  		return isAuthed() && resource != null && auth.uid == id;
+	}
+
+	function isAdmin(auth) {
+		return isAuthed() && auth.token.role == "admin";
+	}
+
+	match /users/{userId} {
+		allow read: if isOwner(request.auth, resource.id) || isAdmin(request.auth);
+		allow update: if resource.id != "admin" && (isOwner(request.auth, resource.id) || isAdmin(request.auth));
+	}
+
+	match /roles/{roleId} {
+		allow read: if isAuthed();
+		allow write: if resource.id != "admin" && isAdmin(request.auth);
+	}
   }
 }

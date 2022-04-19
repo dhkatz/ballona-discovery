@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "lerna run build",
+	"dev": "lerna run --parallel dev",
 	"emulate": "lerna run --parallel emulate",
 	"emulate:firebase": "firebase emulators:start",
     "test": "jest --coverage --verbose --ci"
