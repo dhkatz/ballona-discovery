@@ -2,11 +2,14 @@ import * as functions from 'firebase-functions';
 import { initializeApp } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
 import { getAuth } from 'firebase-admin/auth';
+import { integrify } from 'integrify';
 
 const app = initializeApp();
 
 const auth = getAuth(app);
 const db = getFirestore(app);
+
+integrify({ config: { db, functions } });
 
 export const authOnCreate = functions.auth.user().onCreate(async ({ email, uid }) => {
 	const role = 'user';
@@ -14,6 +17,11 @@ export const authOnCreate = functions.auth.user().onCreate(async ({ email, uid }
 	console.log(`Creating user ${email} with role ${role}`);
 
 	await auth.setCustomUserClaims(uid, {
+		role,
+	});
+
+	await db.collection('profiles').doc(uid).set({
+		email,
 		role,
 	});
 
@@ -38,3 +46,21 @@ export const updateClaims = functions.firestore
 
 		return auth.setCustomUserClaims(params.userId, claims);
 	});
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+export const replUserAttrs = integrify({
+	rule: 'REPLICATE_ATTRIBUTES',
+	source: {
+		collection: 'users',
+	},
+	targets: [
+		{
+			collection: 'profiles',
+			foreignKey: 'userId',
+			attributeMapping: {
+				role: 'role',
+			},
+		},
+	],
+});
