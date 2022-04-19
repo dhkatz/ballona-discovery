@@ -1,10 +1,16 @@
+import React, { FunctionComponent } from 'react';
+
 import { Nav, Navbar } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 
 import logo from '../images/logo.png';
 import { useAuth } from '../hooks';
 
-export const Navigation = () => {
+/**
+ * Main navigation bar
+ * @constructor
+ */
+export const Navigation: FunctionComponent = () => {
 	const [auth] = useAuth();
 
 	const rightNav = auth ? (
@@ -26,7 +32,7 @@ export const Navigation = () => {
 
 	return (
 		<Navbar variant={'light'}>
-			<Navbar.Brand>
+			<Navbar.Brand as={NavLink} to={'/'}>
 				<img
 					alt={'Ballona Wetlands logo'}
 					src={logo}
@@ -37,7 +43,9 @@ export const Navigation = () => {
 			<Navbar.Toggle aria-controls={'navigation'} />
 			<Navbar.Collapse id={'navigation'}>
 				<Nav className={'me-auto'}>
-					<Nav.Link>Tours</Nav.Link>
+					<Nav.Link as={NavLink} to="/tours">
+						Tours
+					</Nav.Link>
 				</Nav>
 				{rightNav}
 			</Navbar.Collapse>
