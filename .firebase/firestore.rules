@@ -22,13 +22,13 @@ service cloud.firestore {
 	}
 
 	match /users/{userId} {
-		allow read: if isOwner(request.auth, resource.id) || isAdmin(request.auth);
-		allow update: if resource.id != "admin" && (isOwner(request.auth, resource.id) || isAdmin(request.auth));
+		allow read: if isAuthed(); // if isOwner(request.auth, resource.id) || isAdmin(request.auth);
+		allow update: if isAuthed(); // if resource.id != "admin" && (isOwner(request.auth, resource.id) || isAdmin(request.auth));
 	}
 
 	match /roles/{roleId} {
 		allow read: if isAuthed();
-		allow write: if resource.id != "admin" && isAdmin(request.auth);
+		allow write: if isAuthed(); // if resource.id != "admin" && isAdmin(request.auth);
 	}
   }
 }
