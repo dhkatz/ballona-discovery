@@ -4,6 +4,8 @@ import { DocumentDataHook, useDocumentData } from 'react-firebase-hooks/firestor
 
 import { useAuth } from './useAuth';
 import { useFirebase } from './useFirebase';
+import { converter } from './useCollection';
+import { useMemo } from 'react';
 
 export const useDocument = <T>(
 	collectionName: string,
@@ -11,8 +13,12 @@ export const useDocument = <T>(
 ): DocumentDataHook<T> => {
 	const { firestore } = useFirebase();
 	const [auth] = useAuth();
-	const ref = collection(firestore, collectionName);
-	const query = auth ? buildRef(ref, auth) : null;
+	const conv = useMemo(() => converter<T>(), []);
+	const ref = useMemo(
+		() => collection(firestore, collectionName).withConverter(converter<T>()),
+		[firestore, collectionName, conv]
+	);
+	const query = useMemo(() => (auth ? buildRef(ref, auth) : null), [auth, ref, buildRef]);
 
 	const [data, loading, error, snapshot] = useDocumentData<T>(query);
 
