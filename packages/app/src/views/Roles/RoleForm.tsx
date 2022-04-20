@@ -3,9 +3,11 @@ import React, { useState } from 'react';
 
 type RoleFormProp = {
 	addRole: (name: string, permissions: string[]) => void;
+	updateRole: (id: string, name: string, permissions: string[]) => void;
+	roleID: string | null;
 };
 
-export const RoleForm = ({ addRole }: RoleFormProp) => {
+export const RoleForm = ({ addRole, updateRole, roleID }: RoleFormProp) => {
 	const [name, setName] = useState('');
 	const [permissions, setPermissions] = useState<string[] | null>(null);
 
@@ -26,7 +28,11 @@ export const RoleForm = ({ addRole }: RoleFormProp) => {
 	function submit(e: React.SyntheticEvent) {
 		e.preventDefault();
 		if (name !== '' && permissions !== null) {
-			addRole(name, permissions);
+			if (roleID !== null) {
+				updateRole(roleID, name, permissions);
+			} else {
+				addRole(name, permissions);
+			}
 		}
 	}
 

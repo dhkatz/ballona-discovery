@@ -12,8 +12,4 @@ export interface Role {
 	id: string;
 	name: string;
 	permissions: string[];
-	// editTours: boolean;
-	// editPanels: boolean;
-	// editRoles: boolean;
-	// manageUsers: boolean;
 }
