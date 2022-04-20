@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import { TailSpin } from 'react-loader-spinner';
-
+import { PlusCircle } from 'react-bootstrap-icons';
 import { useCollection } from '../../hooks';
 import { Role } from '../../types';
 
@@ -51,7 +51,9 @@ export const RoleManagement = () => {
 	return (
 		<>
 			<h1 className="py-4">Role Management</h1>
-			<Button onClick={() => setDisplayForm(true)}>Create</Button>
+			<Button onClick={() => setDisplayForm(true)}>
+				Create <PlusCircle />
+			</Button>
 			<Table striped bordered hover variant="dark">
 				<thead>
 					<tr>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { Trash, ChevronRight } from 'react-bootstrap-icons';
 
 type RoleFormProp = {
 	addRole: (name: string, permissions: string[]) => void;
@@ -87,9 +88,11 @@ export const RoleForm = ({ addRole, updateRole, roleID, discard }: RoleFormProp)
 				</Form.Group>
 				<Button variant="primary" type="submit">
 					Submit
+					<ChevronRight />
 				</Button>
 				<Button variant="primary" onClick={discard}>
 					Discard
+					<Trash />
 				</Button>
 			</Form>
 		</>
