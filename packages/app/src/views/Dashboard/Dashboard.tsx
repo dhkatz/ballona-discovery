@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink, Route, Routes } from 'react-router-dom';
 
 import { UserManagement } from './UserManagement';
+import { RoleManagement } from './RoleManagement';
 import { Container, Nav, Navbar } from 'react-bootstrap';
 
 export const Dashboard = () => {
@@ -20,6 +21,11 @@ export const Dashboard = () => {
 							</Nav.Link>
 						</Nav.Item>
 						<Nav.Item>
+							<Nav.Link className="text-primary" as={NavLink} to={'roles'}>
+								Roles
+							</Nav.Link>
+						</Nav.Item>
+						<Nav.Item>
 							<Nav.Link className="text-primary" as={NavLink} to={'tours'}>
 								Tours
 							</Nav.Link>
@@ -35,6 +41,7 @@ export const Dashboard = () => {
 			<Routes>
 				<Route path="/" element={<h1>Hello!</h1>} />
 				<Route path="/users" element={<UserManagement />} />
+				<Route path="/roles" element={<RoleManagement />} />
 			</Routes>
 		</Container>
 	);

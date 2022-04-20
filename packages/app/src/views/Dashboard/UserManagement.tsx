@@ -1,9 +1,10 @@
-import { Table, DropdownButton, Dropdown } from 'react-bootstrap';
+import { Table, DropdownButton, Dropdown, Button } from 'react-bootstrap';
 import { useCollection } from '../../hooks';
 import { User } from '../../types';
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { firestore } from '../../firebase';
 import { useState } from 'react';
+import { Trash } from 'react-bootstrap-icons';
 import './UserManagement.css';
 
 export const UserManagement = () => {
@@ -46,6 +47,10 @@ export const UserManagement = () => {
 		}
 	}
 
+	async function deleteUser(uid: string) {
+		await deleteDoc(doc(firestore, 'users', uid));
+	}
+
 	return (
 		<div>
 			<h1>User Management</h1>
@@ -82,6 +87,7 @@ export const UserManagement = () => {
 								<th>Email</th>
 								<th>Role</th>
 								<th>Permissions</th>
+								<th>Delete User</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -91,7 +97,8 @@ export const UserManagement = () => {
 										return user;
 									} else if (
 										user[searchFilter]
-											?.toLowerCase()
+											?.toString()
+											.toLowerCase()
 											.includes(query.toLowerCase())
 									) {
 										return user;
@@ -99,7 +106,7 @@ export const UserManagement = () => {
 								})
 								.map((user) => {
 									return (
-										<tr>
+										<tr key={user.uid}>
 											<td>{user.uid}</td>
 											<td>{user.firstName}</td>
 											<td>{user.lastName}</td>
@@ -125,12 +132,20 @@ export const UserManagement = () => {
 													</Dropdown.Item>
 												</DropdownButton>
 											</td>
+											<td>
+												<Button
+													variant="outline-danger"
+													onClick={() => deleteUser(user.uid)}
+												>
+													<Trash />
+												</Button>{' '}
+											</td>
 										</tr>
 									);
 								})}
 						</tbody>
 					</Table>
-					<p>User Count: {users?.length}</p>
+					<p>Active User Count: {users?.filter((user) => user.online == true).length}</p>
 				</>
 			)}
 		</div>
