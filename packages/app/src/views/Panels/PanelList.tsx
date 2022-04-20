@@ -1,9 +1,14 @@
 import React, { ElementType, FunctionComponent } from 'react';
-import { Button, ButtonGroup, Card, Col, Row } from 'react-bootstrap';
+import { TailSpin } from 'react-loader-spinner';
 import { Link } from 'react-router-dom';
 
+import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+
 import { useCollection } from '../../hooks';
-import { TailSpin } from 'react-loader-spinner';
 
 const NavLink = Link as unknown as ElementType & 'a'; // Hack to make Link work with Button
 

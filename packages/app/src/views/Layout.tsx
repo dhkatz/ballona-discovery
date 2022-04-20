@@ -1,6 +1,9 @@
 import React from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
 import { Outlet } from 'react-router-dom';
+
+import Container from 'react-bootstrap/Container';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 
 import { Navigation } from '../components';
 

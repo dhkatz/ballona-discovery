@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Form } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
 
 import { capitalCase } from 'case-anything';
 

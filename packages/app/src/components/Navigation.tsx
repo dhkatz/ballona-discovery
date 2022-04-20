@@ -1,6 +1,8 @@
 import React, { FunctionComponent } from 'react';
-import { Nav, Navbar } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
+
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
 
 import { signOut } from 'firebase/auth';
 

@@ -1,5 +1,7 @@
 import React from 'react';
-import { Container, Nav, Navbar } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
 import { NavLink, Route, Routes } from 'react-router-dom';
 
 import { UserManagement } from '../Users/UserManagement';

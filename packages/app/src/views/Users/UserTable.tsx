@@ -1,9 +1,13 @@
-import { Dropdown, DropdownButton, Table } from 'react-bootstrap';
 import React, { FunctionComponent, useMemo } from 'react';
+
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Table from 'react-bootstrap/Table';
+
+import { capitalCase } from 'case-anything';
 
 import { User } from '../../types';
 import { useCollection } from '../../hooks';
-import { capitalCase } from 'case-anything';
 
 export interface UserTableProps {
 	keys: Array<keyof User>;

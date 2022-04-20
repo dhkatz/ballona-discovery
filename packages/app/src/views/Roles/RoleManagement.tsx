@@ -1,8 +1,11 @@
-import { Table, DropdownButton, Dropdown, Button } from 'react-bootstrap';
-import { RoleForm } from './RoleForm';
 import { useState } from 'react';
-import { useCollection, useDocument } from '../../hooks';
+import Table from 'react-bootstrap/Table';
+import Button from 'react-bootstrap/Button';
+
+import { useCollection } from '../../hooks';
 import { Role } from '../../types';
+
+import { RoleForm } from './RoleForm';
 
 export const RoleManagement = () => {
 	const [displayForm, setDisplayForm] = useState(false);

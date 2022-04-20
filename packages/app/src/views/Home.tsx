@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from 'react';
-import { Carousel, Container } from 'react-bootstrap';
+import Carousel from 'react-bootstrap/Carousel';
+import Container from 'react-bootstrap/Container';
 
 const IMAGES = [
 	'https://playavista.com/shared/2016/02/PlayaVista_0923.jpg?x49818',
