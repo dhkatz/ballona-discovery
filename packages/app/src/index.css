@@ -15,6 +15,6 @@ body, #root {
   height: 100vh;
 }
 
-nav {
+nav, .container > h1 {
 	font-family: Matrix, serif;
 }

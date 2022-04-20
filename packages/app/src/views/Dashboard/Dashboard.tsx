@@ -7,7 +7,7 @@ import { PanelManagement } from '../Panels/PanelManagement';
 
 export const Dashboard = () => {
 	return (
-		<Container fluid={true}>
+		<div>
 			<Navbar collapseOnSelect expand={'lg'} bg={'secondary'} variant={'dark'}>
 				<Navbar.Brand as={NavLink} to={''} className={'text-primary'}>
 					Dashboard
@@ -33,11 +33,13 @@ export const Dashboard = () => {
 					</Nav>
 				</Navbar.Collapse>
 			</Navbar>
-			<Routes>
-				<Route path="/" element={<h1>Hello!</h1>} />
-				<Route path="/users" element={<UserManagement />} />
-				<Route path="/panels/*" element={<PanelManagement />} />
-			</Routes>
-		</Container>
+			<Container>
+				<Routes>
+					<Route path="/" element={<h1>Hello!</h1>} />
+					<Route path="/users" element={<UserManagement />} />
+					<Route path="/panels/*" element={<PanelManagement />} />
+				</Routes>
+			</Container>
+		</div>
 	);
 };
