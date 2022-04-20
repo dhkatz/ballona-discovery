@@ -1,45 +1,32 @@
 import { Form, Button } from 'react-bootstrap';
 import React, { useState } from 'react';
-import { Role } from '../types';
 
-export const RoleForm = () => {
+type RoleFormProp = {
+	addRole: (name: string, permissions: string[]) => void;
+};
+
+export const RoleForm = ({ addRole }: RoleFormProp) => {
 	const [name, setName] = useState('');
-	const [permissions, setPermissions] = useState({
-		editTours: false,
-		editPanels: false,
-		editRoles: false,
-		manageUsers: false,
-	});
-	const [role, setRole] = useState<Role | null>(null);
+	const [permissions, setPermissions] = useState<string[] | null>(null);
 
-	// function handleChange(input: string) {
-	// 	if (permissions !== null) {
-	// 		const newPermissions = [...permissions, input];
-	// 		if (permissions.includes(input)) {
-	// 			const reducedPermissions = newPermissions.filter((item) => item !== input);
-	// 			setPermissions(reducedPermissions);
-	// 		} else {
-	// 			setPermissions(newPermissions);
-	// 		}
-	// 	}
-	// }
 	function handleChange(input: string) {
-		if (permissions[input]) {
-			const p = { ...permissions };
-			p[input] = false;
-			setPermissions(p);
+		if (permissions !== null) {
+			const newPermissions = [...permissions, input];
+			if (permissions.includes(input)) {
+				const filtered = permissions.filter((item) => item !== input);
+				setPermissions(filtered);
+			} else {
+				setPermissions(newPermissions);
+			}
 		} else {
-			const p = { ...permissions };
-			p[input] = false;
-			setPermissions(p);
+			setPermissions([input]);
 		}
 	}
 
 	function submit(e: React.SyntheticEvent) {
 		e.preventDefault();
-		if (name !== '') {
-			setRole({ name, ...rolePermissions });
-			//then update database
+		if (name !== '' && permissions !== null) {
+			addRole(name, permissions);
 		}
 	}
 

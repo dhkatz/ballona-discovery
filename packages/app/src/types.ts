@@ -9,9 +9,11 @@ export interface User {
 }
 
 export interface Role {
+	id: string;
 	name: string;
-	editTours: boolean;
-	editPanels: boolean;
-	editRoles: boolean;
-	manageUsers: boolean;
+	permissions: string[];
+	// editTours: boolean;
+	// editPanels: boolean;
+	// editRoles: boolean;
+	// manageUsers: boolean;
 }
