@@ -21,7 +21,7 @@ export const UserManagement = () => {
 	const filter = useMemo(
 		() =>
 			query !== ''
-				? (user: User) => !!user[field]?.toLowerCase().includes(query.toLowerCase())
+				? (user: User) => `${user[field]}`.toLowerCase().includes(query.toLowerCase())
 				: undefined,
 		[query, field]
 	);

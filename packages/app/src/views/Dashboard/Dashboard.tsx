@@ -1,14 +1,21 @@
 import React from 'react';
+import { Container, Nav, Navbar } from 'react-bootstrap';
 import { NavLink, Route, Routes } from 'react-router-dom';
+
 import { UserManagement } from '../Users/UserManagement';
 import { RoleManagement } from '../Roles/RoleManagement';
-import { Container, Nav, Navbar } from 'react-bootstrap';
 import { PanelManagement } from '../Panels/PanelManagement';
 
 export const Dashboard = () => {
 	return (
 		<div>
-			<Navbar collapseOnSelect expand={'lg'} bg={'secondary'} variant={'dark'}>
+			<Navbar
+				className={'px-4'}
+				collapseOnSelect
+				expand={'lg'}
+				bg={'secondary'}
+				variant={'dark'}
+			>
 				<Navbar.Brand as={NavLink} to={''} className={'text-primary'}>
 					Dashboard
 				</Navbar.Brand>
