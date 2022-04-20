@@ -26,6 +26,18 @@ A content management system for creating interactive park tours and experiences.
   - Events
   - Information
 
+### Packages
+
+The Ballona Discovery project is split into multiple packages.
+
+- **@ballona-discovery/api**
+  - Firebase Functions
+  - API Server
+- **@ballona-discovery/editor**
+  - React Panel Editor
+- **@ballona-discovery/app**
+  - Main React App
+
 ## Development
 
 ### Deployment

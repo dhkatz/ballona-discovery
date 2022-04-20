@@ -5,7 +5,7 @@ import { Middleware } from 'koa';
 import app from './app';
 import router from './router';
 
-export * from './firestore';
+export * from './firebase';
 
 const rewrite = (prefix: string): Middleware => {
 	return async (ctx, next) => {
