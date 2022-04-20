@@ -36,7 +36,7 @@ export const Dashboard = () => {
 			<Routes>
 				<Route path="/" element={<h1>Hello!</h1>} />
 				<Route path="/users" element={<UserManagement />} />
-				<Route path="/panels" element={<PanelManagement />} />
+				<Route path="/panels/*" element={<PanelManagement />} />
 			</Routes>
 		</Container>
 	);

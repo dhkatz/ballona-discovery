@@ -10,7 +10,7 @@
 	src: url("/fonts/Matrix II Regular.otf");
 }
 
-body {
+body, #root {
   background-color: whitesmoke;
   height: 100vh;
 }

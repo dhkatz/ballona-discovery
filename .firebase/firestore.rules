@@ -40,5 +40,12 @@ service cloud.firestore {
 		allow update:
 			if isAuthed(); // && hasAudit(resource, request.auth);
 	}
+
+	match /panels/{panelId} {
+		allow read:
+	  		if isAuthed(); // if isOwner(request.auth, userId) || isAdmin(request.auth);
+		allow update:
+  			if isAuthed(); // if resource.id != "admin" && (isOwner(request.auth, userId) || isAdmin(request.auth));
+	}
   }
 }
