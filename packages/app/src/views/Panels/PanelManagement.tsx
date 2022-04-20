@@ -8,7 +8,9 @@ export const PanelManagement: FunctionComponent = () => {
 		<>
 			<h1 className="py-4">Panel Management</h1>
 			<Routes>
-				<Route path="/" element={<PanelList />} />
+				<Route index element={<PanelList />} />
+				<Route path=":panelId" element={<h1>Panel</h1>} />
+				<Route path=":panelId/edit" element={<h1>Edit Panel</h1>} />
 			</Routes>
 		</>
 	);

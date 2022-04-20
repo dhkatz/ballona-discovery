@@ -5,6 +5,11 @@
 	--bs-secondary-rgb: 25, 42, 107;
 }
 
+.btn-secondary {
+	background-color: var(--bs-secondary);
+	border-color: var(--bs-secondary);
+}
+
 @font-face {
 	font-family: Matrix;
 	src: url("/fonts/Matrix II Regular.otf");
