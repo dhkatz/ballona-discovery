@@ -12,9 +12,7 @@ export const UserTable: FunctionComponent<UserTableProps> = ({ filter }) => {
 	const [users, { update }] = useCollection<User>('users');
 
 	async function setRole(role: string | null, uid: string) {
-		if (role) {
-			await update(uid, { role });
-		}
+		if (role) await update(uid, { role });
 	}
 
 	const rows = useMemo(
