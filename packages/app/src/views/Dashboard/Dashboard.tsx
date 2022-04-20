@@ -2,8 +2,9 @@ import React from 'react';
 import { NavLink, Route, Routes } from 'react-router-dom';
 
 import { UserManagement } from './UserManagement';
-import { RoleManagement } from './RoleManagement';
+import { RoleManagement } from '../Roles/RoleManagement';
 import { Container, Nav, Navbar } from 'react-bootstrap';
+import { PanelManagement } from '../Panels/PanelManagement';
 
 export const Dashboard = () => {
 	return (
@@ -42,6 +43,7 @@ export const Dashboard = () => {
 				<Route path="/" element={<h1>Hello!</h1>} />
 				<Route path="/users" element={<UserManagement />} />
 				<Route path="/roles" element={<RoleManagement />} />
+				<Route path="/panels" element={<PanelManagement />} />
 			</Routes>
 		</Container>
 	);

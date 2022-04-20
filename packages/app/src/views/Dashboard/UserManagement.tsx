@@ -1,14 +1,11 @@
-import { Table, DropdownButton, Dropdown, Button } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Table, DropdownButton, Dropdown } from 'react-bootstrap';
 import { useCollection } from '../../hooks';
 import { User } from '../../types';
-import { doc, updateDoc, deleteDoc } from 'firebase/firestore';
-import { firestore } from '../../firebase';
-import { useState } from 'react';
-import { Trash } from 'react-bootstrap-icons';
 import './UserManagement.css';
 
 export const UserManagement = () => {
-	const [users, loading, error] = useCollection<User>('users');
+	const [users, { error, loading, update }] = useCollection<User>('users');
 	const [query, setQuery] = useState('');
 	const [filterName, setFilterName] = useState('First Name');
 	const [searchFilter, setSearchFilter] = useState<keyof User>('firstName');
@@ -19,8 +16,7 @@ export const UserManagement = () => {
 
 	async function editPermissions(role: string | null, uid: string) {
 		if (role) {
-			const userRef = doc(firestore, 'users', uid);
-			await updateDoc(userRef, { role });
+			await update(uid, { role });
 		}
 	}
 
@@ -36,7 +32,7 @@ export const UserManagement = () => {
 				setSearchFilter('lastName');
 				break;
 			case 'User ID':
-				setSearchFilter('uid');
+				setSearchFilter('id');
 				break;
 			case 'Email':
 				setSearchFilter('email');
@@ -45,10 +41,6 @@ export const UserManagement = () => {
 				setSearchFilter('role');
 				break;
 		}
-	}
-
-	async function deleteUser(uid: string) {
-		await deleteDoc(doc(firestore, 'users', uid));
 	}
 
 	return (
@@ -87,7 +79,6 @@ export const UserManagement = () => {
 								<th>Email</th>
 								<th>Role</th>
 								<th>Permissions</th>
-								<th>Delete User</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -106,8 +97,8 @@ export const UserManagement = () => {
 								})
 								.map((user) => {
 									return (
-										<tr key={user.uid}>
-											<td>{user.uid}</td>
+										<tr>
+											<td>{user.id}</td>
 											<td>{user.firstName}</td>
 											<td>{user.lastName}</td>
 											<td>{user.email}</td>
@@ -116,7 +107,7 @@ export const UserManagement = () => {
 												<DropdownButton
 													id="dropdown-basic-button"
 													title="Edit"
-													onSelect={(e) => editPermissions(e, user.uid)}
+													onSelect={(e) => editPermissions(e, user.id)}
 												>
 													<Dropdown.Item eventKey="Admin">
 														Admin
@@ -131,14 +122,6 @@ export const UserManagement = () => {
 														User
 													</Dropdown.Item>
 												</DropdownButton>
-											</td>
-											<td>
-												<Button
-													variant="outline-danger"
-													onClick={() => deleteUser(user.uid)}
-												>
-													<Trash />
-												</Button>{' '}
 											</td>
 										</tr>
 									);
