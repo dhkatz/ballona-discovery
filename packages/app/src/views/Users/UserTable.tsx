@@ -3,12 +3,14 @@ import React, { FunctionComponent, useMemo } from 'react';
 
 import { User } from '../../types';
 import { useCollection } from '../../hooks';
+import { capitalCase } from 'case-anything';
 
 export interface UserTableProps {
+	keys: Array<keyof User>;
 	filter?: (user: User) => boolean;
 }
 
-export const UserTable: FunctionComponent<UserTableProps> = ({ filter }) => {
+export const UserTable: FunctionComponent<UserTableProps> = ({ filter, keys }) => {
 	const [users, { update }] = useCollection<User>('users');
 
 	async function setRole(role: string | null, uid: string) {
@@ -19,11 +21,9 @@ export const UserTable: FunctionComponent<UserTableProps> = ({ filter }) => {
 		() =>
 			users?.filter(filter ?? (() => true)).map((user) => (
 				<tr key={user.id}>
-					<td>{user.id}</td>
-					<td>{user.firstName ?? 'N/A'}</td>
-					<td>{user.lastName ?? 'N/A'}</td>
-					<td>{user.email}</td>
-					<td>{user.role}</td>
+					{keys.map((key) => (
+						<td key={key}>{user[key] ?? 'N/A'}</td>
+					))}
 					<td>
 						<DropdownButton
 							id="dropdown-basic-button"
@@ -46,11 +46,9 @@ export const UserTable: FunctionComponent<UserTableProps> = ({ filter }) => {
 		<Table striped bordered hover variant="light">
 			<thead>
 				<tr>
-					<th>User ID</th>
-					<th>First Name</th>
-					<th>Last Name</th>
-					<th>Email</th>
-					<th>Role</th>
+					{keys.map((key) => (
+						<th key={key}>{capitalCase(key)}</th>
+					))}
 					<th>Permissions</th>
 				</tr>
 			</thead>

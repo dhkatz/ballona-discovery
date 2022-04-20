@@ -1,18 +1,14 @@
 import React, { useMemo, useState } from 'react';
 import { Form } from 'react-bootstrap';
 
+import { capitalCase } from 'case-anything';
+
 import { useCollection } from '../../hooks';
 import { User } from '../../types';
 
 import { UserTable } from './UserTable';
 
-const FILTERS = {
-	firstName: 'First Name',
-	lastName: 'Last Name',
-	id: 'ID',
-	email: 'Email',
-	role: 'Role',
-} as Record<string, string>;
+const keys = ['firstName', 'lastName', 'id', 'email', 'role'] as Array<keyof User>;
 
 export const UserManagement = () => {
 	const [users, { loading }] = useCollection<User>('users');
@@ -30,10 +26,10 @@ export const UserManagement = () => {
 		return <div>Loading...</div>;
 	}
 
-	const filters = Object.keys(FILTERS).map((key) => {
+	const filters = keys.map((key) => {
 		return (
 			<option key={key} value={key}>
-				{FILTERS[key]}
+				{capitalCase(key)}
 			</option>
 		);
 	});
@@ -53,7 +49,7 @@ export const UserManagement = () => {
 						{filters}
 					</Form.Select>
 				</Form.Group>
-				<UserTable filter={filter} />
+				<UserTable keys={keys} filter={filter} />
 				<span>User Count: {users?.length}</span>
 			</div>
 		</>
