@@ -3,35 +3,37 @@ import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Trash, ChevronRight } from 'react-bootstrap-icons';
+import { PermissionsMap } from '../../types';
 
 type RoleFormProp = {
-	addRole: (name: string, permissions: string[]) => void;
-	updateRole: (id: string, name: string, permissions: string[]) => void;
+	addRole: (name: string, permissions: PermissionsMap) => void;
+	updateRole: (id: string, name: string, permissions: PermissionsMap) => void;
 	roleID: string | null;
 	discard: () => void;
 };
 
+const permissionOptions: PermissionsMap = {
+	editTours: false,
+	editPanels: false,
+	editRoles: false,
+	manageUsers: false,
+};
+
 export const RoleForm = ({ addRole, updateRole, roleID, discard }: RoleFormProp) => {
 	const [name, setName] = useState('');
-	const [permissions, setPermissions] = useState<string[] | null>(null);
+	const [permissions, setPermissions] = useState<PermissionsMap>(permissionOptions);
 
-	function handleChange(input: string) {
-		if (permissions !== null) {
-			const newPermissions = [...permissions, input];
-			if (permissions.includes(input)) {
-				const filtered = permissions.filter((item) => item !== input);
-				setPermissions(filtered);
-			} else {
-				setPermissions(newPermissions);
-			}
-		} else {
-			setPermissions([input]);
+	function handleChange(isChecked: boolean, id: keyof PermissionsMap) {
+		if (isChecked) {
+			const currentPermissions = permissions;
+			currentPermissions[id] = !currentPermissions[id];
+			setPermissions(currentPermissions);
 		}
 	}
 
 	function submit(e: React.SyntheticEvent) {
 		e.preventDefault();
-		if (name !== '' && permissions !== null) {
+		if (name !== '') {
 			if (roleID !== null) {
 				updateRole(roleID, name, permissions);
 			} else {
@@ -59,7 +61,7 @@ export const RoleForm = ({ addRole, updateRole, roleID, discard }: RoleFormProp)
 						name="permissions"
 						type="checkbox"
 						id="editTours"
-						onChange={(e) => handleChange(e.target.id)}
+						onChange={(e) => handleChange(e.target.checked, e.target.id)}
 					/>
 					<Form.Check
 						inline
@@ -67,7 +69,7 @@ export const RoleForm = ({ addRole, updateRole, roleID, discard }: RoleFormProp)
 						name="permissions"
 						type="checkbox"
 						id="editPanels"
-						onChange={(e) => handleChange(e.target.id)}
+						onChange={(e) => handleChange(e.target.checked, e.target.id)}
 					/>
 					<Form.Check
 						inline
@@ -75,7 +77,7 @@ export const RoleForm = ({ addRole, updateRole, roleID, discard }: RoleFormProp)
 						name="permissions"
 						type="checkbox"
 						id="editRoles"
-						onChange={(e) => handleChange(e.target.id)}
+						onChange={(e) => handleChange(e.target.checked, e.target.id)}
 					/>
 					<Form.Check
 						inline
@@ -83,7 +85,7 @@ export const RoleForm = ({ addRole, updateRole, roleID, discard }: RoleFormProp)
 						name="permissions"
 						type="checkbox"
 						id="manageUsers"
-						onChange={(e) => handleChange(e.target.id)}
+						onChange={(e) => handleChange(e.target.checked, e.target.id)}
 					/>
 				</Form.Group>
 				<Button variant="primary" type="submit">

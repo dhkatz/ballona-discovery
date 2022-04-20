@@ -8,8 +8,17 @@ export interface User {
 	online: boolean;
 }
 
+// export interface Role {
+// 	id: string;
+// 	name: string;
+// 	permissions: string[];
+// }
+export type PermissionsMap = {
+	[key: string]: boolean;
+};
+
 export interface Role {
 	id: string;
 	name: string;
-	permissions: string[];
+	permissions: PermissionsMap;
 }
