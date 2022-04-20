@@ -625,3 +625,6 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+# Rollup Visualizer files
+stats.html
+

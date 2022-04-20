@@ -7,6 +7,7 @@ import { useCollection } from '../../hooks';
 import { User } from '../../types';
 
 import { UserTable } from './UserTable';
+import { TailSpin } from 'react-loader-spinner';
 
 const keys = ['firstName', 'lastName', 'id', 'email', 'role'] as Array<keyof User>;
 
@@ -23,7 +24,14 @@ export const UserManagement = () => {
 	);
 
 	if (loading) {
-		return <div>Loading...</div>;
+		return (
+			<>
+				<h1 className="py-4">User Management</h1>
+				<div className="d-flex justify-content-center">
+					<TailSpin color={'#192A6BFF'} />
+				</div>
+			</>
+		);
 	}
 
 	const filters = keys.map((key) => {
