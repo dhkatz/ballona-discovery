@@ -28,7 +28,12 @@ export const RoleManagement = () => {
 	return (
 		<div>
 			{displayForm ? (
-				<RoleForm addRole={addRole} updateRole={updateRole} roleID={roleID} />
+				<RoleForm
+					addRole={addRole}
+					updateRole={updateRole}
+					roleID={roleID}
+					discard={() => setDisplayForm(false)}
+				/>
 			) : (
 				<>
 					<h1>Role Management</h1>

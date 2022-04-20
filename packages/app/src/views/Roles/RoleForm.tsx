@@ -7,9 +7,10 @@ type RoleFormProp = {
 	addRole: (name: string, permissions: string[]) => void;
 	updateRole: (id: string, name: string, permissions: string[]) => void;
 	roleID: string | null;
+	discard: () => void;
 };
 
-export const RoleForm = ({ addRole, updateRole, roleID }: RoleFormProp) => {
+export const RoleForm = ({ addRole, updateRole, roleID, discard }: RoleFormProp) => {
 	const [name, setName] = useState('');
 	const [permissions, setPermissions] = useState<string[] | null>(null);
 
@@ -86,6 +87,9 @@ export const RoleForm = ({ addRole, updateRole, roleID }: RoleFormProp) => {
 				</Form.Group>
 				<Button variant="primary" type="submit">
 					Submit
+				</Button>
+				<Button variant="primary" onClick={discard}>
+					Discard
 				</Button>
 			</Form>
 		</>
