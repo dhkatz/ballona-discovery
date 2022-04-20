@@ -3,6 +3,7 @@ import { NavLink, Route, Routes } from 'react-router-dom';
 
 import { UserManagement } from './UserManagement';
 import { Container, Nav, Navbar } from 'react-bootstrap';
+import { PanelManagement } from '../Panels/PanelManagement';
 
 export const Dashboard = () => {
 	return (
@@ -35,6 +36,7 @@ export const Dashboard = () => {
 			<Routes>
 				<Route path="/" element={<h1>Hello!</h1>} />
 				<Route path="/users" element={<UserManagement />} />
+				<Route path="/panels" element={<PanelManagement />} />
 			</Routes>
 		</Container>
 	);

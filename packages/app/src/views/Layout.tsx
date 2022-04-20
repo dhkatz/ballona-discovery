@@ -6,7 +6,7 @@ import { Navigation } from '../components';
 
 export const Layout = () => {
 	return (
-		<Container className="layout">
+		<>
 			<header>
 				<Navigation />
 			</header>
@@ -39,6 +39,6 @@ export const Layout = () => {
 					</Row>
 				</Container>
 			</footer>
-		</Container>
+		</>
 	);
 };

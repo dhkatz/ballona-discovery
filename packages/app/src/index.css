@@ -18,7 +18,3 @@ body {
 nav {
 	font-family: Matrix, serif;
 }
-
-#root > .container {
-	max-width: 1150px;
-}

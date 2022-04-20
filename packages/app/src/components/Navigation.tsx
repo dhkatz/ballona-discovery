@@ -1,26 +1,26 @@
 import React, { FunctionComponent } from 'react';
-
 import { Nav, Navbar } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 
+import { signOut } from 'firebase/auth';
+
 import logo from '../images/logo.png';
-import { useAuth } from '../hooks';
+import { useAuth, useFirebase } from '../hooks';
 
 /**
  * Main navigation bar
  * @constructor
  */
 export const Navigation: FunctionComponent = () => {
-	const [auth] = useAuth();
+	const { auth } = useFirebase();
+	const [user] = useAuth();
 
-	const rightNav = auth ? (
+	const rightNav = user ? (
 		<Nav>
 			<Nav.Link as={NavLink} to={'/dashboard'}>
 				Dashboard
 			</Nav.Link>
-			<Nav.Link as={NavLink} to="/logout">
-				Logout
-			</Nav.Link>
+			<Nav.Link onClick={() => signOut(auth)}>Logout</Nav.Link>
 		</Nav>
 	) : (
 		<Nav>
@@ -31,7 +31,7 @@ export const Navigation: FunctionComponent = () => {
 	);
 
 	return (
-		<Navbar variant={'light'}>
+		<Navbar variant={'light'} style={{ maxWidth: '1150px' }} className={'mx-auto'}>
 			<Navbar.Brand as={NavLink} to={'/'}>
 				<img
 					alt={'Ballona Wetlands logo'}

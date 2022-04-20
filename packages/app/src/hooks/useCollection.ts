@@ -1,19 +1,23 @@
+import React, { useCallback, useMemo } from 'react';
 import {
+	addDoc,
+	updateDoc,
+	doc,
 	collection,
 	CollectionReference,
-	Query,
 	FirestoreDataConverter,
+	Query,
 	DocumentData,
 	WithFieldValue,
+	FirestoreError,
 } from 'firebase/firestore';
 import { User } from 'firebase/auth';
-import { CollectionDataHook, useCollectionData } from 'react-firebase-hooks/firestore';
+import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 import { useAuth } from './useAuth';
 import { useFirebase } from './useFirebase';
-import { useMemo } from 'react';
 
-export const converter = <T>(): FirestoreDataConverter<T> => ({
+export const buildConverter = <T>(): FirestoreDataConverter<T> => ({
 	fromFirestore(snapshot, options) {
 		const data = snapshot.data(options);
 
@@ -27,24 +31,82 @@ export const converter = <T>(): FirestoreDataConverter<T> => ({
 	},
 });
 
-export const useCollection = <T>(
+export const buildAudit = (auth: User) => ({
+	uid: auth.uid,
+});
+
+export type CollectionHook<T> = [
+	T[] | undefined,
+	{
+		loading: boolean;
+		error: FirestoreError | undefined;
+		update: (id: string, data: Partial<T>) => Promise<void>;
+		add: (data: Partial<T>) => Promise<void>;
+		remove: (id: string) => Promise<void>;
+	}
+];
+
+export const useCollection = <T extends { id: string } = any>(
 	collectionName: string,
 	buildQuery?: (ref: CollectionReference<T>, auth: User) => Query<T>
-): CollectionDataHook<T> => {
+): CollectionHook<T> => {
 	const { firestore } = useFirebase();
 	const [auth] = useAuth();
-	const conv = useMemo(() => converter<T>(), []);
-	const ref = useMemo(
-		() => collection(firestore, collectionName).withConverter(conv) as CollectionReference<T>,
-		[firestore, collectionName, conv]
+
+	const converter = useMemo(() => buildConverter<T>(), []);
+	const collectionRef = useMemo(
+		() =>
+			collection(firestore, collectionName).withConverter(
+				converter
+			) as CollectionReference<T>,
+		[firestore, collectionName, converter]
 	);
 
 	const builtQuery = useMemo(
-		() => (auth ? (buildQuery ? buildQuery(ref, auth) : ref) : null),
-		[auth, buildQuery, ref]
+		() => (auth ? (buildQuery ? buildQuery(collectionRef, auth) : collectionRef) : null),
+		[auth, buildQuery, collectionRef]
 	);
 
-	const [data, loading, error, snapshot] = useCollectionData<T>(builtQuery);
+	const [data, loading, error] = useCollectionData<T>(builtQuery);
 
-	return [data, loading, error, snapshot];
+	const update = useCallback(
+		async (id, data) => {
+			if (!auth) return;
+
+			const docRef = doc(firestore, collectionName, id);
+
+			return updateDoc(docRef, { ...data, audit: buildAudit(auth) });
+		},
+		[collectionRef, auth]
+	);
+
+	const add = useCallback(
+		async (data: Partial<T>) => {
+			if (!auth) return;
+
+			await addDoc<T>(collectionRef, { ...data, audit: buildAudit(auth) } as any);
+		},
+		[collectionRef, auth]
+	);
+
+	const remove = useCallback(
+		async (id: string) => {
+			if (!auth) return;
+
+			const docRef = doc(firestore, collectionName, id);
+
+			await updateDoc(docRef, {
+				audit: {
+					...buildAudit(auth),
+					delete: true,
+				},
+			});
+		},
+		[collectionRef, auth]
+	);
+
+	return useMemo(
+		() => [data, { loading, error, update, add, remove }],
+		[data, loading, error, update, add, remove]
+	) as CollectionHook<T>;
 };
