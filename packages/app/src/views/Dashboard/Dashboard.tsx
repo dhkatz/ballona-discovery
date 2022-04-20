@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink, Route, Routes } from 'react-router-dom';
-
 import { UserManagement } from '../Users/UserManagement';
+import { RoleManagement } from '../Roles/RoleManagement';
 import { Container, Nav, Navbar } from 'react-bootstrap';
 import { PanelManagement } from '../Panels/PanelManagement';
 
@@ -21,6 +21,11 @@ export const Dashboard = () => {
 							</Nav.Link>
 						</Nav.Item>
 						<Nav.Item>
+							<Nav.Link className="text-primary" as={NavLink} to={'roles'}>
+								Roles
+							</Nav.Link>
+						</Nav.Item>
+						<Nav.Item>
 							<Nav.Link className="text-primary" as={NavLink} to={'tours'}>
 								Tours
 							</Nav.Link>
@@ -37,6 +42,7 @@ export const Dashboard = () => {
 				<Routes>
 					<Route index element={<h1>Hello!</h1>} />
 					<Route path="/users" element={<UserManagement />} />
+					<Route path="/roles" element={<RoleManagement />} />
 					<Route path="/panels/*" element={<PanelManagement />} />
 				</Routes>
 			</Container>

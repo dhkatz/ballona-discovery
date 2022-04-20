@@ -5,4 +5,15 @@ export interface User {
 	lastName: string;
 	photoURL?: string;
 	role?: string;
+	online: boolean;
+}
+
+export interface Role {
+	id: string;
+	name: string;
+	permissions: string[];
+	// editTours: boolean;
+	// editPanels: boolean;
+	// editRoles: boolean;
+	// manageUsers: boolean;
 }
