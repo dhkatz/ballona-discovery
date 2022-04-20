@@ -1,12 +1,9 @@
 import * as functions from 'firebase-functions';
-import { initializeApp } from 'firebase-admin/app';
-import { getFirestore } from 'firebase-admin/firestore';
 import { getAuth } from 'firebase-admin/auth';
+import { getFirestore } from 'firebase-admin/firestore';
 
-const app = initializeApp();
-
-const auth = getAuth(app);
-const db = getFirestore(app);
+const auth = getAuth();
+const db = getFirestore();
 
 export const authOnCreate = functions.auth.user().onCreate(async ({ email, uid }) => {
 	const role = 'user';
@@ -14,6 +11,11 @@ export const authOnCreate = functions.auth.user().onCreate(async ({ email, uid }
 	console.log(`Creating user ${email} with role ${role}`);
 
 	await auth.setCustomUserClaims(uid, {
+		role,
+	});
+
+	await db.collection('profiles').doc(uid).set({
+		email,
 		role,
 	});
 

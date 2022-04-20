@@ -6,7 +6,7 @@ import { Navigation } from '../components';
 
 export const Layout = () => {
 	return (
-		<Container>
+		<Container className="layout">
 			<header>
 				<Navigation />
 			</header>
