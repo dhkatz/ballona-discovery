@@ -11,9 +11,10 @@ import { Droppable } from 'react-beautiful-dnd';
 
 export interface EditorCanvasProps {
 	id?: string;
+	className?: string;
 }
 
-export const EditorCanvas = memo<EditorCanvasProps>(({ id: canvasId }) => {
+export const EditorCanvas = memo<EditorCanvasProps>(({ className, id: canvasId }) => {
 	const id = useMemo(() => canvasId || `canvas-${Date.now()}-${Math.random()}`, [canvasId]);
 	const { components, select, selected, register, unregister } = useEditor();
 
@@ -126,7 +127,7 @@ export const EditorCanvas = memo<EditorCanvasProps>(({ id: canvasId }) => {
 		<CanvasContext.Provider value={canvas}>
 			<Droppable droppableId={`${id}`}>
 				{(provided) => (
-					<div ref={provided.innerRef} {...provided.droppableProps}>
+					<div className={className} ref={provided.innerRef} {...provided.droppableProps}>
 						{items.map((item, index) => (
 							<EditorItem key={item.id} index={index} item={item} />
 						))}

@@ -1,13 +1,12 @@
 import { useDocument } from '../../hooks';
 import { doc } from 'firebase/firestore';
 import { FunctionComponent } from 'react';
+import { useParams } from 'react-router-dom';
 
-export interface PanelViewProps {
-	id: string;
-}
+export const PanelView: FunctionComponent = () => {
+	const { panelId } = useParams();
 
-export const PanelView: FunctionComponent<PanelViewProps> = ({ id }) => {
-	const [panel, { loading }] = useDocument<any>('panels', (ref) => doc(ref, id));
+	const [panel, { loading }] = useDocument<any>('panels', (ref) => doc(ref, panelId));
 
 	if (loading) {
 		return <div>Loading...</div>;

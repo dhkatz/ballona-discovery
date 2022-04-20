@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 
 import { useEditor } from '../hooks';
+
+export interface EditorToolboxProps {
+	className?: string;
+}
 
 /**
  * A list of available components that can be dragged and dropped into one or more canvases.
  */
-export const EditorToolbox = () => {
+export const EditorToolbox: FunctionComponent<EditorToolboxProps> = ({ className }) => {
 	const { components } = useEditor();
 
 	return (
-		<div>
+		<div className={className}>
 			<h1>Toolbox</h1>
 			There are {components.length} components available.
 			<br />

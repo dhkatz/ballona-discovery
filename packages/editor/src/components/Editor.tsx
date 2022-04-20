@@ -13,6 +13,7 @@ import { EditorCanvas } from './EditorCanvas';
 export type EditorProps = {
 	components: EditorComponent[];
 	children?: React.ReactNode;
+	className?: string;
 };
 
 type Editor = NamedExoticComponent<EditorProps> & {
@@ -22,7 +23,7 @@ type Editor = NamedExoticComponent<EditorProps> & {
 	Canvas: typeof EditorCanvas;
 };
 
-export const Editor: Editor = memo(({ components, children }) => {
+export const Editor: Editor = memo(({ className, components, children }) => {
 	const [selected, setSelected] = useState<EditorObject | null>(null);
 	const [canvases, setCanvases] = useState<CanvasState[]>([]);
 
@@ -82,7 +83,7 @@ export const Editor: Editor = memo(({ components, children }) => {
 	);
 
 	return (
-		<div>
+		<div className={className}>
 			<DragDropContext onDragEnd={drag}>
 				<EditorContext.Provider value={editor}>{children}</EditorContext.Provider>
 			</DragDropContext>

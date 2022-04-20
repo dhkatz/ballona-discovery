@@ -25,6 +25,13 @@ service cloud.firestore {
 		return isAuthed() && auth.token.role == "admin";
 	}
 
+	match /audits/{auditId} {
+		allow read:
+			if isAuthed(); // if isOwner(request.auth, userId) || isAdmin(request.auth);
+		allow update:
+			if isAuthed(); // if resource.id != "admin" && (isOwner(request.auth, userId) || isAdmin(request.auth));
+	}
+
 	match /users/{userId} {
 		allow read:
 			if isAuthed(); // if isOwner(request.auth, userId) || isAdmin(request.auth);

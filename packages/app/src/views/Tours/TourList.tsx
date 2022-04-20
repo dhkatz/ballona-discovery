@@ -33,6 +33,7 @@ export const TourList: FunctionComponent = () => {
 					<Card.Body>
 						<Card.Title>{tour.title ?? 'Untitled Tour'}</Card.Title>
 						<Card.Text>{tour.description ?? 'No Description'}</Card.Text>
+						<Card.Text>{`${tour.panels?.length ?? 0} Panels`}</Card.Text>
 						<ButtonGroup>
 							<Button as={NavLink} to={`${tour.id}`} variant="secondary">
 								View

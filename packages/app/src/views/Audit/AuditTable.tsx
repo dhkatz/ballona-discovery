@@ -7,23 +7,25 @@ import { User } from '../../types';
 import { useCollection } from '../../hooks';
 
 export interface AuditTableProps {
-	keys: Array<keyof User>;
-	filter?: (user: User) => boolean;
+	keys: string[];
+	filter?: (metadata: any) => boolean;
 }
 
 export const AuditTable: FunctionComponent<AuditTableProps> = ({ filter, keys }) => {
-	const [audits] = useCollection<User>('audits');
+	const [audits] = useCollection<any>('audits');
+
+	const metadata = useMemo(() => audits?.map((audit) => audit.metadata ?? {}), [audits]);
 
 	const rows = useMemo(
 		() =>
-			audits?.filter(filter ?? (() => true)).map((audit) => (
-				<tr key={audit.id}>
+			metadata?.filter(filter ?? (() => true)).map((audit, i) => (
+				<tr key={i}>
 					{keys.map((key) => (
-						<td key={key}>{audit[key] ?? 'N/A'}</td>
+						<td key={key}>{`${audit[key]}` ?? 'N/A'}</td>
 					))}
 				</tr>
 			)),
-		[audits, filter]
+		[metadata, filter]
 	);
 
 	return (

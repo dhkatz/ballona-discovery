@@ -1,7 +1,11 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { FunctionComponent, useEffect, useMemo } from 'react';
 import { useEditor } from '../hooks';
 
-export const EditorSettings = () => {
+export interface EditorSettingsProps {
+	className?: string;
+}
+
+export const EditorSettings: FunctionComponent<EditorSettingsProps> = ({ className }) => {
 	const { selected } = useEditor();
 
 	useEffect(() => {
@@ -17,7 +21,7 @@ export const EditorSettings = () => {
 	}, [selected]);
 
 	return (
-		<div>
+		<div className={className}>
 			<h1>Settings</h1>
 			Selected component: {selected?.component.name}
 			<br />

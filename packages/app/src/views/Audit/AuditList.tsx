@@ -9,16 +9,17 @@ import { User } from '../../types';
 import { AuditTable } from './AuditTable';
 import { TailSpin } from 'react-loader-spinner';
 
-const keys = ['firstName', 'lastName', 'id', 'email', 'role'] as Array<keyof User>;
+const keys = ['path', 'timestamp', 'uid'];
 
 export const AuditList = () => {
-	const [audits, { loading }] = useCollection<User>('audits');
+	const [audits, { loading }] = useCollection<any>('audits');
 	const [query, setQuery] = useState('');
 	const [field, setField] = useState<keyof User>('firstName');
 	const filter = useMemo(
 		() =>
 			query !== ''
-				? (user: User) => `${user[field]}`.toLowerCase().includes(query.toLowerCase())
+				? (metadata: any) =>
+						`${metadata[field]}`.toLowerCase().includes(query.toLowerCase())
 				: undefined,
 		[query, field]
 	);
@@ -52,7 +53,7 @@ export const AuditList = () => {
 				</Form.Select>
 			</Form.Group>
 			<AuditTable keys={keys} filter={filter} />
-			<span>User Count: {audits?.length}</span>
+			<span>Audit Count: {audits?.length ?? 0}</span>
 		</div>
 	);
 };
