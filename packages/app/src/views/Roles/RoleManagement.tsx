@@ -38,7 +38,14 @@ export const RoleManagement = () => {
 	}
 
 	if (displayForm) {
-		return <RoleForm addRole={addRole} updateRole={updateRole} roleID={roleID} />;
+		return (
+			<RoleForm
+				addRole={addRole}
+				updateRole={updateRole}
+				roleID={roleID}
+				discard={() => setDisplayForm(false)}
+			/>
+		);
 	}
 
 	return (
