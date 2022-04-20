@@ -1,7 +1,0 @@
-.search-bar {
-	display: flex;
-	align-items: center;
-	flex-flow: row nowrap;
-	justify-content: flex-end;
-	padding-bottom: 10px;
-}

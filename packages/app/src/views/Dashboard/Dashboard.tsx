@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink, Route, Routes } from 'react-router-dom';
 
-import { UserManagement } from './UserManagement';
+import { UserManagement } from '../Users/UserManagement';
 import { Container, Nav, Navbar } from 'react-bootstrap';
 import { PanelManagement } from '../Panels/PanelManagement';
 
