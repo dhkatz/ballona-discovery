@@ -6,14 +6,14 @@ import { Navigation } from '../components';
 
 export const Layout = () => {
 	return (
-		<>
-			<header>
+		<div className="d-flex flex-column h-100">
+			<header className="flex-grow-0 flex-shrink-1">
 				<Navigation />
 			</header>
-			<main>
+			<main className="flex-fill">
 				<Outlet />
 			</main>
-			<footer>
+			<footer className="flex-grow-0 flex-shrink-1">
 				<Container>
 					<Row>
 						<Col sm="4">
@@ -39,6 +39,6 @@ export const Layout = () => {
 					</Row>
 				</Container>
 			</footer>
-		</>
+		</div>
 	);
 };

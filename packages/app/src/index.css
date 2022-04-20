@@ -10,11 +10,11 @@
 	src: url("/fonts/Matrix II Regular.otf");
 }
 
-body {
+body, #root {
   background-color: whitesmoke;
   height: 100vh;
 }
 
-nav {
+nav, .container > h1 {
 	font-family: Matrix, serif;
 }
