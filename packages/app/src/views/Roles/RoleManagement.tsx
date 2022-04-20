@@ -6,21 +6,26 @@ import { Role } from '../../types';
 
 export const RoleManagement = () => {
 	const [displayForm, setDisplayForm] = useState(false);
+	const [roleID, setRoleID] = useState<string | null>(null);
 	const [roles, { error, loading, update, add }] = useCollection<Role>('roles');
 
-	function modifyRole(id: string) {
-		setDisplayForm(true);
+	async function updateRole(id: string, name: string, permissions: string[]) {
+		await update(id, { name, permissions }).then(() => {
+			setDisplayForm(false);
+			setRoleID(null);
+		});
 	}
 
-	function addRole(name: string, permissions: string[]) {
-		add({ name, permissions });
-		setDisplayForm(false);
+	async function addRole(name: string, permissions: string[]) {
+		await add({ name, permissions }).then(() => {
+			setDisplayForm(false);
+		});
 	}
 
 	return (
 		<div>
 			{displayForm ? (
-				<RoleForm addRole={addRole} />
+				<RoleForm addRole={addRole} updateRole={updateRole} roleID={roleID} />
 			) : (
 				<>
 					<h1>Role Management</h1>
@@ -40,7 +45,12 @@ export const RoleManagement = () => {
 										<td>{role.name}</td>
 										<td>{role.permissions.join(',')}</td>
 										<td>
-											<Button onClick={() => modifyRole(role.id)}>
+											<Button
+												onClick={() => {
+													setRoleID(role.id);
+													setDisplayForm(true);
+												}}
+											>
 												Edit
 											</Button>
 										</td>
