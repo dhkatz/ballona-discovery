@@ -3,7 +3,6 @@ import Table from 'react-bootstrap/Table';
 
 import { capitalCase } from 'case-anything';
 
-import { User } from '../../types';
 import { useCollection } from '../../hooks';
 
 export interface AuditTableProps {
