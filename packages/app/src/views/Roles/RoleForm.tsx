@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Trash, ChevronRight } from 'react-bootstrap-icons';
 import { PermissionsMap } from '../../types';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
 type RoleFormProp = {
 	addRole: (name: string, permissions: PermissionsMap) => void;
@@ -44,7 +45,7 @@ export const RoleForm = ({ addRole, updateRole, roleID, discard }: RoleFormProp)
 
 	return (
 		<>
-			<h1>Add Role</h1>
+			<h1 className={'mt-4'}>Add Role</h1>
 			<Form onSubmit={submit}>
 				<Form.Group>
 					<Form.Label as="legend">Role Name:</Form.Label>
@@ -88,14 +89,16 @@ export const RoleForm = ({ addRole, updateRole, roleID, discard }: RoleFormProp)
 						onChange={(e) => handleChange(e.target.checked, e.target.id)}
 					/>
 				</Form.Group>
-				<Button variant="primary" type="submit">
-					Submit
-					<ChevronRight />
-				</Button>
-				<Button variant="primary" onClick={discard}>
-					Discard
-					<Trash />
-				</Button>
+				<ButtonGroup className={'my-3'}>
+					<Button variant="secondary" type="submit">
+						Submit
+						<ChevronRight />
+					</Button>
+					<Button variant="secondary" onClick={discard}>
+						Discard
+						<Trash />
+					</Button>
+				</ButtonGroup>
 			</Form>
 		</>
 	);

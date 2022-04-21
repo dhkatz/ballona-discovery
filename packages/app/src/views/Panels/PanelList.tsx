@@ -48,7 +48,7 @@ export const PanelList: FunctionComponent = () => {
 	});
 
 	return (
-		<Row cols={1} md={4} className="gy-4">
+		<Row cols={1} md={4} className="gy-4 mt-4">
 			{cards}
 		</Row>
 	);
