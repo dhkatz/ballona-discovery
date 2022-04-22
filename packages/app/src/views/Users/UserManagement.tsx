@@ -1,27 +1,36 @@
-import React, { useMemo, useState } from 'react';
-import Form from 'react-bootstrap/Form';
-
-import { capitalCase } from 'case-anything';
+import React from 'react';
+import { TailSpin } from 'react-loader-spinner';
 
 import { useCollection } from '../../hooks';
 import { User } from '../../types';
 
-import { UserTable } from './UserTable';
-import { TailSpin } from 'react-loader-spinner';
+import { Table } from '../../components/Table';
 
-const keys = ['firstName', 'lastName', 'id', 'email', 'role'] as Array<keyof User>;
+const columns = [
+	{
+		key: 'id',
+		name: 'ID',
+	},
+	{
+		key: 'firstName',
+		name: 'First Name',
+	},
+	{
+		key: 'lastName',
+		name: 'Last Name',
+	},
+	{
+		key: 'email',
+		name: 'Email',
+	},
+	{
+		key: 'role',
+		name: 'Role',
+	},
+];
 
 export const UserManagement = () => {
 	const [users, { loading }] = useCollection<User>('users');
-	const [query, setQuery] = useState('');
-	const [field, setField] = useState<keyof User>('firstName');
-	const filter = useMemo(
-		() =>
-			query !== ''
-				? (user: User) => `${user[field]}`.toLowerCase().includes(query.toLowerCase())
-				: undefined,
-		[query, field]
-	);
 
 	if (loading) {
 		return (
@@ -34,32 +43,11 @@ export const UserManagement = () => {
 		);
 	}
 
-	const filters = keys.map((key) => {
-		return (
-			<option key={key} value={key}>
-				{capitalCase(key)}
-			</option>
-		);
-	});
-
 	return (
 		<>
 			<h1 className="py-4">User Management</h1>
 
-			<div className="d-flex flex-column">
-				<Form.Group className="d-flex align-self-end w-25 py-3">
-					<Form.Control
-						type="text"
-						placeholder="Search..."
-						onChange={(e) => setQuery(e.target.value)}
-					/>
-					<Form.Select onChange={(e) => setField(e.target.value as keyof User)}>
-						{filters}
-					</Form.Select>
-				</Form.Group>
-				<UserTable keys={keys} filter={filter} />
-				<span>User Count: {users?.length}</span>
-			</div>
+			<Table columns={columns} rows={users} search edit create />
 		</>
 	);
 };

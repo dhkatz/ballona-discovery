@@ -33,8 +33,14 @@ export const Navigation: FunctionComponent = () => {
 	);
 
 	return (
-		<Navbar variant={'light'} style={{ maxWidth: '1150px' }} className={'mx-auto'}>
-			<Navbar.Brand as={NavLink} to={'/'}>
+		<Navbar
+			variant={'light'}
+			style={{ maxWidth: '1150px' }}
+			className={'mx-auto px-4 px-xl-0'}
+			collapseOnSelect
+			expand={'lg'}
+		>
+			<Navbar.Brand as={NavLink} to={'/'} className={'d-none d-lg-block'}>
 				<img
 					alt={'Ballona Wetlands logo'}
 					src={logo}
@@ -44,7 +50,7 @@ export const Navigation: FunctionComponent = () => {
 			</Navbar.Brand>
 			<Navbar.Toggle aria-controls={'navigation'} />
 			<Navbar.Collapse id={'navigation'}>
-				<Nav className={'me-auto'}>
+				<Nav className={'me-lg-auto'}>
 					<Nav.Link as={NavLink} to="/tours">
 						Tours
 					</Nav.Link>

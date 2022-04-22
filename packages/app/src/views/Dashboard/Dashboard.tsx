@@ -58,7 +58,7 @@ export const Dashboard = () => {
 							</Nav.Link>
 						</Nav.Item>
 
-						<Nav.Item className={'ms-auto'}>
+						<Nav.Item className={'ms-lg-auto'}>
 							<Nav.Link className="text-primary" as={NavLink} to={'audit'}>
 								<PostcardFill className={'mx-2 mb-1'} />
 								Audit Logs

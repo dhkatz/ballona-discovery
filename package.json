@@ -5,8 +5,8 @@
   "license": "MIT",
   "scripts": {
     "build": "lerna run build",
-	"dev": "lerna run --parallel dev",
-	"emulate": "firebase emulators:start",
+    "dev": "lerna run --parallel dev",
+    "emulate": "firebase emulators:start",
     "test": "jest --coverage --verbose --ci"
   },
   "workspaces": {
@@ -34,6 +34,9 @@
     "yarn-audit-fix": "^9.2.2"
   },
   "resolutions": {
-	"async": "^3.2.3"
-  }
+    "async": "^3.2.3"
+  },
+  "main": "index.js",
+  "repository": "https://github.com/dhkatz/ballona-discovery.git",
+  "author": "dhkatz <dhkatz.16@gmail.com>"
 }

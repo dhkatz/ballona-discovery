@@ -628,3 +628,5 @@ Temporary Items
 # Rollup Visualizer files
 stats.html
 
+.idea/
+.firebaserc
